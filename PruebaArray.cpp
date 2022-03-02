@@ -121,6 +121,18 @@ pair<int*,int> listaSinRepetidos (int* ptrLista, int tama){
   }
   return {ptrSinRepetidosLista,tamaSin};
 }
+pair<int*,int> unirListas(int* ptrLista1, int tama1, int* ptrLista2, int tama2){
+	int tamaUnion = tama1+tama2;
+	int* ptrListaUnion = new int[tamaUnion];
+	int i;
+	for (i = 0 ; i < tama1 ; i++ ){
+		ptrListaUnion[i] = ptrLista1[i]; 
+	}
+	for (int j = 0 ; j < tama2 ; i++, j++){
+		ptrListaUnion[i] = ptrLista2[j];
+	}
+	return {ptrListaUnion,tamaUnion};
+}
 
 int main(){
 
@@ -129,6 +141,7 @@ int main(){
   int* ptrArray3; // Array ordenado.
   int tama = 5;
   pair <int*,int> sinRepetir;
+  pair <int*,int> pairUnion;
   
   cout << "Celia Pedregosa" << endl;
   cout << "Generar lista aleatoria" << endl;
@@ -153,6 +166,18 @@ int main(){
   imprimirLista(ptrArray3,tama);
   cout << "Lista sin repetidos: ";
   sinRepetir = listaSinRepetidos(ptrArray1,tama);
+  imprimirLista(sinRepetir.first,sinRepetir.second);
+  cout << "Unir listas: " << endl;
+  ptrArray2 = crearListaAleatoria(tama);
+  pairUnion = unirListas(ptrArray1, tama, ptrArray2,tama);
+  cout << "Primera lista: ";
+  imprimirLista(ptrArray1,tama);
+  cout << "Segunda lista: ";
+  imprimirLista(ptrArray2,tama);
+  cout << "Lista unión: ";
+  imprimirLista(pairUnion.first,pairUnion.second);
+  cout << "Lista unión sin repetidos: ";
+  sinRepetir = listaSinRepetidos(pairUnion.first,pairUnion.second);
   imprimirLista(sinRepetir.first,sinRepetir.second);
   return 0;
 }
