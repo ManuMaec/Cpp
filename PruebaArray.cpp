@@ -1,6 +1,7 @@
 #include <iostream>
 #include <time.h>
 #include <stdlib.h>
+#include <utility>
 using namespace std;
 
 int* crearListaAleatoria(int tama){
@@ -8,7 +9,7 @@ int* crearListaAleatoria(int tama){
   int numero;
   int* ptrArray = new int[tama];
   for (int i = 0 ; i < tama ; i++){
-    numero = rand()%10;
+    numero = rand()%10+1;
     ptrArray[i] = numero;
   }
   return ptrArray;
@@ -84,13 +85,14 @@ bool estaEnLista(int* ptrLista, int tama, int elemento){
   }
   return esta;
 }
+/*
 int* listaSinRepetidos (int* ptrLista, int tama){
   int* ptrSinRepetidosLista = new int[tama];
   int tamaSin = 0;
   bool esta;
   for (int i = 0 ; i < tama ; i++){ // Recorro la lista inicial.
     esta = true;
-    for (int j = 0 ; j < tamaSin+1 && esta ; j++){ // Para cada elemento de la inicial compruebo si está en la nueva.
+    for (int j = 0 ; j < tamaSin+1 && esta ; j++){ //Para cada elemento de la inicial compruebo si está en la nueva.
       // ¿Está el elmento ptrLista[i] en ptrSinRepetidosLista? -> Función!
       esta = estaEnLista(ptrSinRepetidosLista,tamaSin+1,ptrLista[i]);
     }
@@ -101,6 +103,24 @@ int* listaSinRepetidos (int* ptrLista, int tama){
   }
   return ptrSinRepetidosLista;
 }
+*/
+pair<int*,int> listaSinRepetidos (int* ptrLista, int tama){
+  int* ptrSinRepetidosLista = new int[tama];
+  int tamaSin = 0;
+  bool esta;
+  for (int i = 0 ; i < tama ; i++){ // Recorro la lista inicial.
+    esta = true;
+    for (int j = 0 ; j < tamaSin+1 && esta ; j++){ //Para cada elemento de la inicial compruebo si está en la nueva.
+      // ¿Está el elmento ptrLista[i] en ptrSinRepetidosLista? -> Función!
+      esta = estaEnLista(ptrSinRepetidosLista,tamaSin+1,ptrLista[i]);
+    }
+    if (!esta){	// Si no está lo añado.
+        ptrSinRepetidosLista[tamaSin] = ptrLista[i];
+        tamaSin++;
+      }
+  }
+  return {ptrSinRepetidosLista,tamaSin};
+}
 
 int main(){
 
@@ -108,6 +128,8 @@ int main(){
   int* ptrArray2; // Array invertido.
   int* ptrArray3; // Array ordenado.
   int tama = 5;
+  pair <int*,int> sinRepetir;
+  
   cout << "Celia Pedregosa" << endl;
   cout << "Generar lista aleatoria" << endl;
   ptrArray1 = crearListaAleatoria(tama);
@@ -130,7 +152,7 @@ int main(){
   ptrArray3 = ordenarLista(ptrArray1,tama);
   imprimirLista(ptrArray3,tama);
   cout << "Lista sin repetidos: ";
-  ptrArray3 = listaSinRepetidos(ptrArray1,tama);
-  imprimirLista(ptrArray3,tama);
+  sinRepetir = listaSinRepetidos(ptrArray1,tama);
+  imprimirLista(sinRepetir.first,sinRepetir.second);
   return 0;
 }
