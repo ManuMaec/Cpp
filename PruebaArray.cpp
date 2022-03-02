@@ -133,6 +133,36 @@ pair<int*,int> unirListas(int* ptrLista1, int tama1, int* ptrLista2, int tama2){
 	}
 	return {ptrListaUnion,tamaUnion};
 }
+int mayorDeDos(int uno, int dos){
+	int mayor = uno;
+	if (dos > uno) mayor = dos;
+	return mayor;
+}
+pair<int*,int> interseccionListas (int* ptrLista1, int tama1, int* ptrLista2, int tama2){
+  int tamaMaxInter = mayorDeDos(tama1,tama2); // Una intersección de listas nunca puede ser dar una lista mayor que la mayor de las listas que la componen.  
+  int* ptrListaInterseccion= new int[tamaMaxInter]; 
+  int tamaInt = 0;
+  int* ptrLista1NoRep = new int[tama1];
+  int tama1NoRep;
+  bool esta;
+  pair <int*,int> sinRepetir;
+  // Antes de empezar elimino los repetidos de la primera lista:
+  sinRepetir = listaSinRepetidos(ptrLista1,tama1);
+  ptrLista1NoRep = sinRepetir.first;
+  tama1NoRep = sinRepetir.second;
+  for (int i = 0 ; i < tama1NoRep ; i++){ // Recorro la primera.
+    esta = false;
+    for (int j = 0 ; j < tama2 && !esta ; j++){ // Para cada elemento de la inicial compruebo si está en la segunda.
+      esta = estaEnLista(ptrLista2,tama2,ptrLista1NoRep[i]);
+    }
+    if (esta){	// Si está es que aparece en las dos listas, lo añado.
+        ptrListaInterseccion[tamaInt] = ptrLista1NoRep[i];
+        tamaInt++;
+      }
+  }
+  return {ptrListaInterseccion,tamaInt};
+}
+
 
 int main(){
 
@@ -142,6 +172,7 @@ int main(){
   int tama = 5;
   pair <int*,int> sinRepetir;
   pair <int*,int> pairUnion;
+  pair <int*,int> pairInterseccion;
   
   cout << "Celia Pedregosa" << endl;
   cout << "Generar lista aleatoria" << endl;
@@ -176,8 +207,11 @@ int main(){
   imprimirLista(ptrArray2,tama);
   cout << "Lista unión: ";
   imprimirLista(pairUnion.first,pairUnion.second);
-  cout << "Lista unión sin repetidos: ";
+  cout << "Lista unión sin repetidos: "; //Se puede llamar a listaSinRepetidos dentro de la unión para que el resultado sea directamente sin repetidos.
   sinRepetir = listaSinRepetidos(pairUnion.first,pairUnion.second);
   imprimirLista(sinRepetir.first,sinRepetir.second);
+  cout << "Lista intersección: "; 
+  pairInterseccion = interseccionListas(ptrArray1, tama, ptrArray2,tama);
+  imprimirLista(pairInterseccion.first,pairInterseccion.second);
   return 0;
 }
