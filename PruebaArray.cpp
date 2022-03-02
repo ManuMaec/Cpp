@@ -87,15 +87,17 @@ bool estaEnLista(int* ptrLista, int tama, int elemento){
 int* listaSinRepetidos (int* ptrLista, int tama){
   int* ptrSinRepetidosLista = new int[tama];
   int tamaSin = 0;
+  bool esta;
   for (int i = 0 ; i < tama ; i++){ // Recorro la lista inicial.
-    for (int j = 0 ; j < tamaSin+1 ; j++){ //Para cada elemento de la inicial compruebo si está en la nueva.
+    esta = true;
+    for (int j = 0 ; j < tamaSin+1 && esta ; j++){ // Para cada elemento de la inicial compruebo si está en la nueva.
       // ¿Está el elmento ptrLista[i] en ptrSinRepetidosLista? -> Función!
-      // Si no está lo añado.
-      if (!estaEnLista(ptrSinRepetidosLista,tamaSin+1,ptrLista[i])){
-        ptrSinRepetidosLista[j] = ptrLista[i];
+      esta = estaEnLista(ptrSinRepetidosLista,tamaSin+1,ptrLista[i]);
+    }
+    if (!esta){	// Si no está lo añado.
+        ptrSinRepetidosLista[tamaSin] = ptrLista[i];
         tamaSin++;
       }
-    }
   }
   return ptrSinRepetidosLista;
 }
