@@ -3,13 +3,107 @@
 #include <iostream>
 using namespace std;
 
+int suma10 (int num){
+  num += 10;
+  return num;
+}
+int suma10 (int* ptrNum){
+  *ptrNum += 10;
+  return *ptrNum;
+}
+
+double* rellenarArrayNotas (int tama){
+  double* array = new double[tama];
+  string line;
+  for (int i = 0 ; i < tama ; i++){
+    cout << "Introduce una nota: ";
+    getline(cin,line);
+    array[i] = stod(line);
+  }
+  return array;
+}
+double* subirNotaArray (double* array, int tama, double porcentaje){
+  double* nuevoArray = new double[tama];
+  for (int i = 0 ; i < tama ; i++){
+    nuevoArray[i] = array[i]*(1+(porcentaje/100));
+  }
+  return nuevoArray;
+}
+string* rellenarArray (int tama){
+  string* array = new string [tama];
+  for (int i = 0 ; i < tama ; i++){
+    cout << "Introduce un color: ";
+    getline(cin,array[i]);
+  }
+  return array;
+}
+void imprimirArray(string* array, int tama){
+  for (int i = 0 ; i < tama ; i++){
+    cout << array[i] << endl;
+  }
+}
+void imprimirArray(double* array, int tama){
+  for (int i = 0 ; i < tama ; i++){
+    cout << array[i] << endl;
+  }
+}
+
 int main() {
-  string juego = "Tetris";
+  //// Tercera parte
+  string* colores = NULL;
+  double* notas = NULL;
+  double* nuevasNotas = NULL;
+  string line;
+  int numero;
+  double porcentaje = 20;
+
+  cout << "Numero de colores y notas: " ;
+  getline(cin,line);
+  numero = stoi(line);
+
+  /*colores = new string[numero];
+  colores = rellenarArray(numero);
+  imprimirArray(colores, numero);*/
+
+  //notas = new double[numero];
+  notas = rellenarArrayNotas(numero);
+  nuevasNotas = subirNotaArray(notas, numero, porcentaje);
+  imprimirArray (nuevasNotas, numero);
+
+
+
+
+  delete [] colores;
+  delete [] notas;
+  delete [] nuevasNotas;
+  colores = NULL;
+  nuevasNotas = NULL;
+  notas = NULL;
+
+  //// Segunda parte
+  /*
+  int numero = 10;
+  int resultado;
+
+  cout << "Imprimir numero: " << numero << endl;
+  resultado = suma10(numero);
+  cout << "Imprimir numero depues de sumar10(int): " << numero << endl;
+  cout << "Imprimir resultado depues de sumar10(int): " << resultado << endl;
+
+  cout << "Imprimir numero: " << numero << endl;
+  resultado = suma10(&numero);
+  cout << "Imprimir numero depues de sumar10(*int): " << numero << endl;
+  cout << "Imprimir resultado depues de sumar10(*int): " << resultado << endl;
+  */
+
+  //// Primera parte
+
+  /*string juego = "Tetris";
   string &ocio = juego;
   int num = 5;
   //string juegos[5];
   string* ptrJuego = &juego;
-  int* ptrNum = &num;
+  int* ptrNum = &num;*/
 
 
   /*cout << juego << endl; // Imprime Tetris.
@@ -30,7 +124,7 @@ int main() {
   cout << &juegos[4] << endl;
   */
 
-  cout << "Imprimo el juego: " << juego << endl;
+  /*cout << "Imprimo el juego: " << juego << endl;
   cout << "Imprimo el &juego: " << &juego << endl;
   //cout << "Imprimo el *juego: " << *juego << endl;
   cout << "Imprimo el ocio: " << ocio << endl;
@@ -41,15 +135,7 @@ int main() {
   cout << "Imprimo el num: " << num << endl;
   cout << "Imprimo el *ptrNum: " << *ptrNum << endl;
   cout << "Imprimo el &num: " << &num << endl;
-  cout << "Imprimo el ptrNum: " << ptrNum << endl << endl;
-
-
-
-
-
-
-
-
+  cout << "Imprimo el ptrNum: " << ptrNum << endl << endl;*/
 
   return 0;
 }
